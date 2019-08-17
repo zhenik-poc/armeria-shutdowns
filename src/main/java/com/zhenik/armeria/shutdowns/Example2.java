@@ -5,6 +5,7 @@ import com.linecorp.armeria.server.Server;
 import com.linecorp.armeria.server.ServerBuilder;
 import com.zhenik.armeria.shutdowns.domain.Integration;
 
+// server not shutdown, integration shutdown
 public class Example2 {
     public static void main(String[] args) {
         Server armeriaServer = new ServerBuilder()
@@ -13,9 +14,6 @@ public class Example2 {
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> armeriaServer.stop().join())); // hook
         armeriaServer.start().join(); // main thread
-        new Integration().run(); // main thread
-
-
-        // continue
+        new Integration(true).run(); // main thread
     }
 }

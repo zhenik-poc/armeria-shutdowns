@@ -7,6 +7,8 @@ import com.zhenik.armeria.shutdowns.domain.Integration;
 
 import java.util.concurrent.CompletableFuture;
 
+
+// shutdown properly, server available
 public class Example4 {
     public static void main(String[] args) {
         Server armeriaServer = new ServerBuilder()
@@ -22,7 +24,7 @@ public class Example4 {
 
         CompletableFuture
                 .supplyAsync(() -> {
-                    new Integration().run();
+                    new Integration(true).run(); // child thread
                     return null;
                 })
                 .exceptionally(throwable -> {
@@ -36,6 +38,5 @@ public class Example4 {
                 })
                 .thenAccept(CompletableFuture::join); // not necessary
 
-        // shutdown
     }
 }

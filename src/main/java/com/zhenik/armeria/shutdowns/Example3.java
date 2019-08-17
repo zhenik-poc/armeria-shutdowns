@@ -5,6 +5,7 @@ import com.linecorp.armeria.server.Server;
 import com.linecorp.armeria.server.ServerBuilder;
 import com.zhenik.armeria.shutdowns.domain.Integration;
 
+// shutdown properly, but server does not available on port 8080
 public class Example3 {
     public static void main(String[] args) {
         Server armeriaServer = new ServerBuilder()
@@ -17,9 +18,6 @@ public class Example3 {
         }));
 
         Thread thread = new Thread(()-> armeriaServer.start().join()); // child thread
-        new Integration().run(); // main thread
-
-
-        // shutdown properly
+        new Integration(true).run(); // main thread
     }
 }
